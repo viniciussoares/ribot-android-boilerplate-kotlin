@@ -34,6 +34,7 @@ dependencies {
     final SUPPORT_LIBRARY_VERSION = '24.2.1'
     final DAGGER_VERSION = '2.7'
     final BUTTERKNIFE_VERSION = '8.1.0'
+    final LEAKCANARY_VERSION = '1.4'
 
     // App Dependencies
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -55,6 +56,10 @@ dependencies {
 
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     kapt "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$LEAKCANARY_VERSION"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
 
     // Unit tests dependencies
     testCompile 'junit:junit:4.12'
