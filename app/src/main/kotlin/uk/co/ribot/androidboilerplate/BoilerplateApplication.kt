@@ -8,17 +8,14 @@ import uk.co.ribot.androidboilerplate.injection.module.ApplicationModule
 
 class BoilerplateApplication: Application() {
 
-    private var _applicationComponent: ApplicationComponent? = null
-    val applicationComponent: ApplicationComponent
-        get() {
-            if (_applicationComponent == null)
-                DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this))
-                        .build()
-            return _applicationComponent ?: throw AssertionError()
-        }
+    lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
+
+        applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(ApplicationModule(this))
+                .build()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
