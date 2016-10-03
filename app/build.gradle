@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "uk.co.ribot.androidboilerplate"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -54,6 +54,7 @@ dependencies {
 
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxkotlin:0.60.0'
 
     compile 'com.jakewharton.timber:timber:4.3.1'
 
@@ -71,6 +72,8 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION"
+
+    compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
 
     // Unit tests dependencies
     testCompile 'junit:junit:4.12'
