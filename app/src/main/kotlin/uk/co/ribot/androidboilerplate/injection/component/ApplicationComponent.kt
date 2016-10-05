@@ -3,6 +3,7 @@ package uk.co.ribot.androidboilerplate.injection.component
 import android.app.Application
 import android.content.Context
 import dagger.Component
+import uk.co.ribot.androidboilerplate.data.DataManager
 import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService
 import uk.co.ribot.androidboilerplate.injection.ApplicationContext
@@ -18,4 +19,5 @@ interface ApplicationComponent {
     fun application(): Application
     fun ribotsService(): RibotsService
     fun databaseHelper(): DatabaseHelper
+    fun dataManager(): DataManager
 }
