@@ -23,6 +23,15 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+
+        // Common Test Dir
+        def commonTestDir = 'src/commonTest/kotlin'
+        test {
+            java.srcDir commonTestDir
+        }
+        androidTest {
+            java.srcDir commonTestDir
+        }
     }
 }
 
@@ -38,6 +47,11 @@ dependencies {
     final LEAKCANARY_VERSION = '1.4'
     final PAPERPARCEL_VERSION = '1.0.0'
     final RETROFIT_VERSION = '2.1.0'
+    final HAMCREST_VERSION = '1.3'
+
+    def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    def jUnit = "junit:junit:4.12"
+    def mockito = "org.mockito:mockito-core:1.10.19"
 
     // App Dependencies
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -50,7 +64,7 @@ dependencies {
 
     provided "org.glassfish:javax.annotation:10.0-b28"
     compile  "com.google.dagger:dagger:$DAGGER_VERSION"
-    kapt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    kapt daggerCompiler
 
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
@@ -76,9 +90,16 @@ dependencies {
     compile 'com.squareup.sqlbrite:sqlbrite:0.5.0'
 
     // Unit tests dependencies
-    testCompile 'junit:junit:4.12'
+    testCompile jUnit
+    testCompile mockito
+    testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
+    testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
+    testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
+    testCompile 'org.robolectric:robolectric:3.1'
 
     // Instrumentation test dependencies
+    androidTestCompile jUnit
+    androidTestCompile mockito
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
