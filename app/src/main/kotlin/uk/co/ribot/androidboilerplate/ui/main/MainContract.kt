@@ -12,7 +12,7 @@ object MainContract {
         fun showError()
     }
 
-    open abstract class Presenter: BaseMvpPresenter<View>() {
+    abstract class Presenter: BaseMvpPresenter<View>() {
         abstract fun loadRibots()
     }
 }
