@@ -34,8 +34,8 @@ data class Ribot(val profile: Profile) {
             values.put("lastName", ribot.profile.name.last)
             values.put("hexColor", ribot.profile.hexColor)
             values.put("dateOfBirth", ribot.profile.dateOfBirth.time)
-            values.put("avatar", ribot.profile.avatar)
-            values.put("bio", ribot.profile.bio)
+            values.put("avatar", ribot.profile.avatar ?: "")
+            values.put("bio", ribot.profile.bio ?: "")
             return values
         }
     }
