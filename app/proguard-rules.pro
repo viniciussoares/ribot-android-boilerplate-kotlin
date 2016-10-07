@@ -16,6 +16,65 @@
 #   public *;
 #}
 
+# Kotlin
+-dontwarn kotlin.**
+-keepattributes EnclosingMethod
+-keepattributes Signature
+-keepattributes Annotation
+
+# ButterKnife rules
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+# Retrofit rules
+-dontnote retrofit2.Platform
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+-dontwarn retrofit2.Platform$Java8
+
+# OkHttp rules
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
+# RxJava rules
+# RxAndroid will soon ship with rules so this may not be needed in the future
+# https://github.com/ReactiveX/RxAndroid/issues/219
+-dontwarn sun.misc.Unsafe
+-keep class rx.internal.util.unsafe.** { *; }
+
+# Gson rules
+-keep class sun.misc.Unsafe { *; }
+# TODO change to match your package model
+# Keep non static or private fields of models so Gson can find their names
+-keepclassmembers class uk.co.ribot.androidboilerplate.data.model.** { *; }
+# TODO change to match your Retrofit services (only if using inner models withing the service)
+# Some models used by gson are inner classes inside the retrofit service
+-keepclassmembers class uk.co.ribot.androidboilerplate.data.remote.RibotsService$** {
+    !static !private <fields>;
+}
+
+# Paperparcel
+-dontwarn org.jetbrains.annotations.**
+-keepclassmembers class nz.bradcampbell.paperparcel.PaperParcelMapping {
+  static ** FROM_ORIGINAL;
+  static ** FROM_PARCELABLE;
+}
+
+# https://code.google.com/p/android/issues/detail?id=194513
+-dontnote android.net.http.*
+-dontnote org.apache.commons.codec.**
+-dontnote org.apache.http.**
+
 # Produces useful obfuscated stack traces
 # http://proguard.sourceforge.net/manual/examples.html#stacktrace
 -renamesourcefileattribute SourceFile
