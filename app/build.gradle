@@ -89,7 +89,7 @@ dependencies {
 
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     def jUnit = "junit:junit:4.12"
-    def mockito = "org.mockito:mockito-core:2.1.0"
+    def mockito = "org.mockito:mockito-core:2.2.1"
     def mockitoKotlin = "com.nhaarman:mockito-kotlin:0.5.2"
 
     // App Dependencies
