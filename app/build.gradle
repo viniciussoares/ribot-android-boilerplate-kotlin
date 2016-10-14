@@ -90,7 +90,7 @@ dependencies {
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     def jUnit = "junit:junit:4.12"
     def mockito = "org.mockito:mockito-core:2.2.1"
-    def mockitoKotlin = "com.nhaarman:mockito-kotlin:0.5.2"
+    def mockitoKotlin = "com.nhaarman:mockito-kotlin:0.8.0"
 
     // App Dependencies
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -132,9 +132,7 @@ dependencies {
     // Unit tests dependencies
     testCompile jUnit
     testCompile mockito
-    testCompile (mockitoKotlin) {
-        exclude module: "kotlin-stdlib"
-    }
+    testCompile mockitoKotlin
     testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
@@ -143,9 +141,7 @@ dependencies {
     // Instrumentation test dependencies
     androidTestCompile jUnit
     androidTestCompile mockito
-    androidTestCompile (mockitoKotlin) {
-        exclude module: "kotlin-stdlib"
-    }
+    androidTestCompile mockitoKotlin
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
