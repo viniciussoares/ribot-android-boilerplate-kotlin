@@ -64,6 +64,13 @@ android {
     lintOptions {
         warning 'InvalidPackage'
     }
+
+    // https://github.com/robolectric/robolectric/issues/2647
+    applicationVariants.all { variant ->
+        def productFlavor = variant.productFlavors[0] != null ? "${variant.productFlavors[0].name.capitalize()}" : ""
+        def buildType = "${variant.buildType.name.capitalize()}"
+        tasks["compile${productFlavor}${buildType}UnitTestSources"].dependsOn(tasks["merge${productFlavor}${buildType}Assets"])
+    }
 }
 
 repositories {
