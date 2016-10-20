@@ -27,6 +27,11 @@ Libraries and tools included:
 - Kotlin 1.0.4.
 - Latest Android SDK Tools and build tools.
 
+## TODO
+
+- Functional Tests (Waiting [dexmaker](https://github.com/crittercism/dexmaker/pull/33) support for mockito 2.x)
+- Static code analysis
+
 ## Architecture
 
 This project follows ribot's Android architecture guidelines that are based on [MVP (Model View Presenter)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter). Read more about them [here](https://github.com/ribot/android-guidelines/blob/master/architecture_guidelines/android_architecture.md). 
