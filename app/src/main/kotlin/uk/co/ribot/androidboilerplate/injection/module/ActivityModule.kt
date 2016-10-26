@@ -5,19 +5,19 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import uk.co.ribot.androidboilerplate.injection.ActivityContext
-import javax.inject.Singleton
+import uk.co.ribot.androidboilerplate.injection.PerActivity
 
 @Module
 class ActivityModule(private val activity: Activity) {
 
     @Provides
-    @Singleton
+    @PerActivity
     internal fun provideActivity(): Activity {
         return activity
     }
 
     @Provides
-    @Singleton
+    @PerActivity
     @ActivityContext
     internal fun providesContext(): Context {
         return activity
