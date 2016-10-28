@@ -75,7 +75,7 @@ Note: For Android Studio to use syntax highlighting for Automated tests and Unit
 
 To quickly start a new project from this boilerplate follow the next steps:
 
-* Download this [repository as a zip](https://github.com/ribot/android-boilerplate/archive/master.zip).
+* Download this [repository as a zip](https://github.com/viniciussoares/ribot-android-boilerplate-kotlin/archive/master.zip).
 * Change the package name. 
   * Rename packages in main, androidTest and test using Android Studio.
   * In `app/build.gradle` file, `packageName` and `testInstrumentationRunner`.
