@@ -31,18 +31,16 @@ open class BaseActivity: AppCompatActivity() {
         // being called after a configuration change.
         activityId = savedInstanceState?.getLong(KEY_ACTIVITY_ID) ?: NEXT_ID.getAndIncrement()
 
-        val configPersistentComponent = componentsMap[activityId]?.apply {
+        if (componentsMap[activityId] != null)
             Timber.i("Reusing ConfigPersistentComponent id=%d", activityId)
-        } ?: activityId.let {
+
+        val configPersistentComponent = componentsMap.getOrPut(activityId, {
             Timber.i("Creating new ConfigPersistentComponent id=%d", activityId)
 
-            val component = DaggerConfigPersistentComponent.builder()
+            DaggerConfigPersistentComponent.builder()
                     .applicationComponent(getApplicationComponent())
                     .build()
-
-            componentsMap.put(activityId, component)
-            component
-        }
+        })
 
         activityComponent = configPersistentComponent.activityComponent(ActivityModule(this))
     }
