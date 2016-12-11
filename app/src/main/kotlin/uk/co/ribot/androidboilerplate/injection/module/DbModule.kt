@@ -7,6 +7,7 @@ import javax.inject.Singleton
 
 import dagger.Module
 import dagger.Provides
+import rx.schedulers.Schedulers
 import timber.log.Timber
 import uk.co.ribot.androidboilerplate.data.local.DbOpenHelper
 
@@ -22,13 +23,15 @@ class DbModule {
     @Provides
     @Singleton
     fun provideSqlBrite(): SqlBrite {
-        return SqlBrite.create(SqlBrite.Logger { message -> Timber.tag("Database").v(message) })
+        return SqlBrite.Builder()
+                .logger({ Timber.tag("Database").v(it) })
+                .build()
     }
 
     @Provides
     @Singleton
     fun provideDatabase(sqlBrite: SqlBrite, helper: DbOpenHelper): BriteDatabase {
-        val db = sqlBrite.wrapDatabaseHelper(helper)
+        val db = sqlBrite.wrapDatabaseHelper(helper, Schedulers.io())
         db.setLoggingEnabled(true)
         return db
     }

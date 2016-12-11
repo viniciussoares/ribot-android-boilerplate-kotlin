@@ -16,6 +16,7 @@ import uk.co.ribot.androidboilerplate.test.common.TestDataFactory
 import uk.co.ribot.androidboilerplate.util.RxSchedulersOverrideRule
 
 import junit.framework.Assert.assertEquals
+import rx.android.schedulers.AndroidSchedulers
 import uk.co.ribot.androidboilerplate.util.DefaultConfig
 
 /**
@@ -28,9 +29,13 @@ class DatabaseHelperTest {
     @Rule @JvmField
     val overrideSchedulersRule = RxSchedulersOverrideRule()
 
-    val sqlBrite = SqlBrite.create()
-            .wrapDatabaseHelper(DbOpenHelper(RuntimeEnvironment.application))
-    val databaseHelper = DatabaseHelper(sqlBrite)
+    val databaseHelper: DatabaseHelper by lazy {
+        val dbHelper = DbOpenHelper(RuntimeEnvironment.application)
+        val sqlBrite = SqlBrite.Builder()
+                .build()
+                .wrapDatabaseHelper(dbHelper, AndroidSchedulers.mainThread())
+        DatabaseHelper(sqlBrite)
+    }
 
     @Test
     fun setRibots() {
