@@ -64,13 +64,6 @@ android {
     lintOptions {
         warning 'InvalidPackage'
     }
-
-    // https://github.com/robolectric/robolectric/issues/2647
-    applicationVariants.all { variant ->
-        def productFlavor = variant.productFlavors[0] != null ? "${variant.productFlavors[0].name.capitalize()}" : ""
-        def buildType = "${variant.buildType.name.capitalize()}"
-        tasks["compile${productFlavor}${buildType}UnitTestSources"].dependsOn(tasks["merge${productFlavor}${buildType}Assets"])
-    }
 }
 
 repositories {
@@ -136,7 +129,7 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
-    testCompile 'org.robolectric:robolectric:3.1'
+    testCompile 'org.robolectric:robolectric:3.1.4'
 
     // Instrumentation test dependencies
     androidTestCompile jUnit
