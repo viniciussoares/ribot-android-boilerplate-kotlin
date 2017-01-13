@@ -13,8 +13,8 @@ import rx.Subscription
 import rx.lang.kotlin.FunctionSubscriber
 import rx.schedulers.Schedulers
 import timber.log.Timber
+import uk.co.ribot.androidboilerplate.BoilerplateApplication
 import uk.co.ribot.androidboilerplate.data.model.Ribot
-import uk.co.ribot.androidboilerplate.util.extension.getApplicationComponent
 import uk.co.ribot.androidboilerplate.util.extension.isNetworkConnected
 import uk.co.ribot.androidboilerplate.util.extension.toggleAndroidComponent
 
@@ -33,7 +33,9 @@ class SyncService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        getApplicationComponent().inject(this)
+        (applicationContext as BoilerplateApplication)
+                .applicationComponent
+                .inject(this)
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {

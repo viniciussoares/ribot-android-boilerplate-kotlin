@@ -4,12 +4,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import uk.co.ribot.androidboilerplate.BoilerplateApplication
-import uk.co.ribot.androidboilerplate.injection.component.ApplicationComponent
-
-fun Context.getApplicationComponent(): ApplicationComponent {
-    return (applicationContext as BoilerplateApplication).applicationComponent
-}
 
 fun Context.isNetworkConnected(): Boolean {
     val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
