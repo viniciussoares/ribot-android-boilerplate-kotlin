@@ -1,5 +1,6 @@
 package uk.co.ribot.androidboilerplate.data.local
 
+import android.database.sqlite.SQLiteDatabase
 import com.squareup.sqlbrite.BriteDatabase
 
 import rx.Observable
@@ -21,10 +22,12 @@ class DatabaseHelper @Inject constructor(val db: BriteDatabase) {
             val transaction = db.newTransaction()
 
             try {
-                db.delete(Ribot.TABLE, null)
+                db.delete(Db.RibotProfileTable.TABLE_NAME, null)
 
                 newRibots.forEach {
-                    val result = db.insert(Ribot.TABLE, Ribot.toContentValues(it))
+                    val result = db.insert(Db.RibotProfileTable.TABLE_NAME,
+                            Db.RibotProfileTable.toContentValues(it.profile),
+                            SQLiteDatabase.CONFLICT_REPLACE)
                     if (result >= 0) subscriber.onNext(it)
                 }
 
@@ -39,7 +42,8 @@ class DatabaseHelper @Inject constructor(val db: BriteDatabase) {
     }
 
     fun getRibots(): Observable<List<Ribot>> {
-        return db.createQuery(Ribot.TABLE, "SELECT * FROM ${Ribot.TABLE}")
-                .mapToList(Ribot.MAPPER)
+        return db.createQuery(Db.RibotProfileTable.TABLE_NAME,
+                "SELECT * FROM ${Db.RibotProfileTable.TABLE_NAME}")
+                .mapToList { Ribot(Db.RibotProfileTable.parseCursor(it)) }
     }
 }

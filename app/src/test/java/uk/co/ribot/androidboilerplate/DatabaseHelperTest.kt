@@ -17,6 +17,7 @@ import uk.co.ribot.androidboilerplate.util.RxSchedulersOverrideRule
 
 import junit.framework.Assert.assertEquals
 import rx.android.schedulers.AndroidSchedulers
+import uk.co.ribot.androidboilerplate.data.local.Db
 import uk.co.ribot.androidboilerplate.util.DefaultConfig
 
 /**
@@ -46,12 +47,12 @@ class DatabaseHelperTest {
         result.assertNoErrors()
         result.assertReceivedOnNext(ribots)
 
-        val cursor = databaseHelper.db.query("SELECT * FROM ${Ribot.TABLE}")
+        val cursor = databaseHelper.db.query("SELECT * FROM ${Db.RibotProfileTable.TABLE_NAME}")
         assertEquals(2, cursor.count)
 
         ribots.forEach {
             cursor.moveToNext()
-            assertEquals(it, Ribot.MAPPER.call(cursor))
+            assertEquals(it.profile, Db.RibotProfileTable.parseCursor(cursor))
         }
 
         cursor.close()
