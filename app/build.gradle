@@ -84,7 +84,7 @@ dependencies {
     def daggerCompiler = "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     def jUnit = "junit:junit:4.12"
     def mockito = "org.mockito:mockito-core:$MOCKITO_VERSION"
-    def mockitoKotlin = "com.nhaarman:mockito-kotlin:0.8.0"
+    def mockitoKotlin = "com.nhaarman:mockito-kotlin:1.1.0"
 
     // App Dependencies
     compile fileTree(dir: 'libs', include: ['*.jar'])
