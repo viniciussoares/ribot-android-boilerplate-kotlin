@@ -8,7 +8,7 @@ import uk.co.ribot.androidboilerplate.injection.component.ApplicationComponent
 import uk.co.ribot.androidboilerplate.injection.component.DaggerApplicationComponent
 import uk.co.ribot.androidboilerplate.injection.module.ApplicationModule
 
-class BoilerplateApplication: Application() {
+open class BoilerplateApplication: Application() {
 
     lateinit var applicationComponent: ApplicationComponent
         private set
