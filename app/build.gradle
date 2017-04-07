@@ -129,7 +129,9 @@ dependencies {
     // Unit tests dependencies
     testCompile jUnit
     testCompile mockito
-    testCompile mockitoKotlin
+    testCompile (mockitoKotlin) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
     testCompile "org.hamcrest:hamcrest-core:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
     testCompile "org.hamcrest:hamcrest-integration:$HAMCREST_VERSION"
@@ -139,7 +141,9 @@ dependencies {
     androidTestCompile jUnit
     androidTestCompile mockito
     androidTestCompile "org.mockito:mockito-android:$MOCKITO_VERSION"
-    androidTestCompile mockitoKotlin
+    androidTestCompile (mockitoKotlin) {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
+    }
     androidTestCompile "com.android.support:support-annotations:$SUPPORT_LIBRARY_VERSION"
     androidTestCompile("com.android.support.test.espresso:espresso-contrib:$ESPRESSO_VERSION") {
         exclude group: 'com.android.support', module: 'appcompat'
