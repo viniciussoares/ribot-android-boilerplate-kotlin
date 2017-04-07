@@ -10,6 +10,9 @@ import rx.android.plugins.RxAndroidSchedulersHook
 import rx.plugins.RxJavaPlugins
 import rx.plugins.RxJavaSchedulersHook
 import rx.schedulers.Schedulers
+import rx.functions.Func1
+import rx.plugins.RxJavaHooks
+
 
 /**
  * This rule registers SchedulerHooks for RxJava and RxAndroid to ensure that subscriptions
@@ -19,21 +22,13 @@ import rx.schedulers.Schedulers
  */
 class RxSchedulersOverrideRule : TestRule {
 
-    private val mRxJavaSchedulersHook = object : RxJavaSchedulersHook() {
-        override fun getIOScheduler(): Scheduler {
-            return Schedulers.immediate()
-        }
-
-        override fun getNewThreadScheduler(): Scheduler {
-            return Schedulers.immediate()
-        }
-    }
-
     private val mRxAndroidSchedulersHook = object : RxAndroidSchedulersHook() {
         override fun getMainThreadScheduler(): Scheduler {
             return Schedulers.immediate()
         }
     }
+
+    private val mRxJavaImmediateScheduler = Func1<Scheduler, Scheduler> { Schedulers.immediate() }
 
     override fun apply(base: Statement, description: Description): Statement {
         return object : Statement() {
@@ -42,13 +37,14 @@ class RxSchedulersOverrideRule : TestRule {
                 RxAndroidPlugins.getInstance().reset()
                 RxAndroidPlugins.getInstance().registerSchedulersHook(mRxAndroidSchedulersHook)
 
-                RxJavaPlugins.getInstance().reset()
-                RxJavaPlugins.getInstance().registerSchedulersHook(mRxJavaSchedulersHook)
+                RxJavaHooks.reset()
+                RxJavaHooks.setOnIOScheduler(mRxJavaImmediateScheduler)
+                RxJavaHooks.setOnNewThreadScheduler(mRxJavaImmediateScheduler)
 
                 base.evaluate()
 
                 RxAndroidPlugins.getInstance().reset()
-                RxJavaPlugins.getInstance().reset()
+                RxJavaHooks.reset()
             }
         }
     }
