@@ -1,9 +1,7 @@
 package uk.co.ribot.androidboilerplate.data.model
 
-import nz.bradcampbell.paperparcel.PaperParcel
 import java.util.Date
 
-@PaperParcel
 data class Profile(
         val name: Name,
         val email: String,
