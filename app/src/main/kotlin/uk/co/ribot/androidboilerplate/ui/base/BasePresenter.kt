@@ -5,7 +5,7 @@ package uk.co.ribot.androidboilerplate.ui.base
  * attachView() and detachView(). It also handles keeping a reference to the [_view] that
  * can be accessed from the children classes by calling [view].
  */
-open class BaseMvpPresenter<T : MvpView> : MvpPresenter<T> {
+open class BasePresenter<T : MvpView> : Presenter<T> {
 
     private var _view: T? = null
     val view: T

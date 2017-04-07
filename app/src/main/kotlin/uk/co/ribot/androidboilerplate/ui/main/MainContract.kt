@@ -1,7 +1,7 @@
 package uk.co.ribot.androidboilerplate.ui.main
 
 import uk.co.ribot.androidboilerplate.data.model.Ribot
-import uk.co.ribot.androidboilerplate.ui.base.BaseMvpPresenter
+import uk.co.ribot.androidboilerplate.ui.base.BasePresenter
 import uk.co.ribot.androidboilerplate.ui.base.MvpView
 
 object MainContract {
@@ -12,7 +12,7 @@ object MainContract {
         fun showError()
     }
 
-    abstract class Presenter: BaseMvpPresenter<View>() {
+    abstract class Presenter: BasePresenter<View>() {
         abstract fun loadRibots()
     }
 }

@@ -15,20 +15,16 @@ import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainContract.View {
 
-    val EXTRA_TRIGGER_SYNC_FLAG =
-            "uk.co.ribot.androidboilerplate.ui.main.MainActivity.EXTRA_TRIGGER_SYNC_FLAG"
+    companion object {
+        val EXTRA_TRIGGER_SYNC_FLAG =
+                "uk.co.ribot.androidboilerplate.ui.main.MainActivity.EXTRA_TRIGGER_SYNC_FLAG"
+    }
 
-    @Inject
-    lateinit var presenter: MainPresenter
+    @Inject lateinit var presenter: MainPresenter
+    @Inject lateinit var ribotsAdapter: RibotsAdapter
 
-    @Inject
-    lateinit var ribotsAdapter: RibotsAdapter
-
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
-
-    @BindView(R.id.recycler_view)
-    lateinit var recyclerView: RecyclerView
+    @BindView(R.id.toolbar) lateinit var toolbar: Toolbar
+    @BindView(R.id.recycler_view) lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +36,6 @@ class MainActivity : BaseActivity(), MainContract.View {
 
         recyclerView.adapter = ribotsAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-
         presenter.attachView(this)
         presenter.loadRibots()
 
