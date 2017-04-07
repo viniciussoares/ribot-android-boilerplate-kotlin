@@ -10,24 +10,21 @@ import android.os.IBinder
 import javax.inject.Inject
 
 import rx.Subscription
-import rx.lang.kotlin.FunctionSubscriber
+import rx.lang.kotlin.subscribeBy
 import rx.schedulers.Schedulers
 import timber.log.Timber
 import uk.co.ribot.androidboilerplate.BoilerplateApplication
-import uk.co.ribot.androidboilerplate.data.model.Ribot
 import uk.co.ribot.androidboilerplate.util.extension.isNetworkConnected
 import uk.co.ribot.androidboilerplate.util.extension.toggleAndroidComponent
 
 class SyncService : Service() {
-
     companion object {
         fun getStartIntent(context: Context): Intent {
             return Intent(context, SyncService::class.java)
         }
     }
 
-    @Inject
-    lateinit var dataManager: DataManager
+    @Inject lateinit var dataManager: DataManager
 
     var subscription: Subscription? = null
 
@@ -48,26 +45,25 @@ class SyncService : Service() {
             return Service.START_NOT_STICKY
         }
 
-        subscription?.let { if (!it.isUnsubscribed) it.unsubscribe() }
-
+        subscription?.unsubscribe()
         subscription = dataManager.syncRibots()
                 .subscribeOn(Schedulers.io())
-                .subscribe(FunctionSubscriber<Ribot>()
-                        .onCompleted {
-                            Timber.i("Synced successfully!")
-                            stopSelf(startId)
-                        }
-                        .onError {
-                            Timber.w(it, "Error syncing.")
-                            stopSelf(startId)
-                        })
+                .subscribeBy(
+                    onCompleted = {
+                        Timber.i("Synced successfully!")
+                        stopSelf(startId)
+                    },
+                    onError = {
+                        Timber.w(it, "Error syncing.")
+                        stopSelf(startId)
+                    }
+                )
 
         return Service.START_STICKY
     }
 
     override fun onDestroy() {
         subscription?.unsubscribe()
-        subscription = null
         super.onDestroy()
     }
 
@@ -76,7 +72,6 @@ class SyncService : Service() {
     }
 
     class SyncOnConnectionAvailable : BroadcastReceiver() {
-
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == CONNECTIVITY_ACTION && context.isNetworkConnected()) {
                 Timber.i("Connection is now available, triggering sync...")

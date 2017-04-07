@@ -4,21 +4,18 @@ import android.database.sqlite.SQLiteDatabase
 import com.squareup.sqlbrite.BriteDatabase
 
 import rx.Observable
-import rx.lang.kotlin.observable
 import timber.log.Timber
 import uk.co.ribot.androidboilerplate.data.model.Ribot
 import java.sql.SQLException
 import javax.inject.Inject
 import javax.inject.Singleton
+import rx.Emitter.BackpressureMode
 
 @Singleton
 class DatabaseHelper @Inject constructor(val db: BriteDatabase) {
 
     fun setRibots(newRibots: Collection<Ribot>): Observable<Ribot> {
-        return observable { subscriber ->
-            if (subscriber.isUnsubscribed)
-                return@observable
-
+        return Observable.create<Ribot>({ emitter ->
             val transaction = db.newTransaction()
 
             try {
@@ -28,17 +25,18 @@ class DatabaseHelper @Inject constructor(val db: BriteDatabase) {
                     val result = db.insert(Db.RibotProfileTable.TABLE_NAME,
                             Db.RibotProfileTable.toContentValues(it.profile),
                             SQLiteDatabase.CONFLICT_REPLACE)
-                    if (result >= 0) subscriber.onNext(it)
+                    if (result >= 0) emitter.onNext(it)
                 }
 
                 transaction.markSuccessful()
-                subscriber.onCompleted()
+                emitter.onCompleted()
             } catch (exception: SQLException) {
                 Timber.e(exception)
+                emitter.onError(exception)
             }
 
             transaction.end()
-        }
+        }, BackpressureMode.BUFFER)
     }
 
     fun getRibots(): Observable<List<Ribot>> {
