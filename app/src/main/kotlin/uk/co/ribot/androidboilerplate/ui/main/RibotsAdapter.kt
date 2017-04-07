@@ -30,13 +30,11 @@ constructor() : RecyclerView.Adapter<RibotsAdapter.RibotViewHolder>() {
         val ribot = ribots[position]
 
         holder.hexColorView.setBackgroundColor(Color.parseColor(ribot.profile.hexColor))
-        holder.nameTextView.text = "${ribot.profile.name.first} ${ribot.profile.name.last}"
+        holder.nameTextView.text = "%s %s".format(ribot.profile.name.first, ribot.profile.name.last)
         holder.emailTextView.text = ribot.profile.email
     }
 
-    override fun getItemCount(): Int {
-        return ribots.size
-    }
+    override fun getItemCount(): Int = ribots.size
 
     inner class RibotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
