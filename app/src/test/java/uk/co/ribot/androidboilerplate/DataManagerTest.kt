@@ -6,8 +6,9 @@ import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyList
 import org.mockito.Mock
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 
 import rx.Observable
 import rx.observers.TestSubscriber
@@ -16,8 +17,6 @@ import uk.co.ribot.androidboilerplate.data.local.DatabaseHelper
 import uk.co.ribot.androidboilerplate.data.model.Ribot
 import uk.co.ribot.androidboilerplate.data.remote.RibotsService
 import uk.co.ribot.androidboilerplate.test.common.TestDataFactory
-
-import org.mockito.Mockito.anyListOf
 
 /**
  * This test class performs local unit tests without dependencies on the Android framework
@@ -72,7 +71,7 @@ class DataManagerTest {
         dataManager.syncRibots().subscribe(TestSubscriber<Ribot>())
         // Verify right calls to helper methods
         verify(mockRibotsService).getRibots()
-        verify(mockDatabaseHelper, never()).setRibots(anyListOf(Ribot::class.java))
+        verify(mockDatabaseHelper, never()).setRibots(anyList<Ribot>())
     }
 
     private fun stubSyncRibotsHelperCalls(ribots: List<Ribot>) {

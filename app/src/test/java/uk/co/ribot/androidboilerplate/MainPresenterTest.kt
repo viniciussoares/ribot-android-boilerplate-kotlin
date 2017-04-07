@@ -6,8 +6,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyList
 import org.mockito.Mock
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 
 import rx.Observable
 import uk.co.ribot.androidboilerplate.data.DataManager
@@ -16,7 +17,6 @@ import uk.co.ribot.androidboilerplate.test.common.TestDataFactory
 import uk.co.ribot.androidboilerplate.ui.main.MainPresenter
 import uk.co.ribot.androidboilerplate.util.RxSchedulersOverrideRule
 
-import org.mockito.Mockito.anyListOf
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import uk.co.ribot.androidboilerplate.ui.main.MainContract
@@ -63,7 +63,7 @@ class MainPresenterTest {
 
         mainPresenter.loadRibots()
         verify(mockMainMvpView).showRibotsEmpty()
-        verify(mockMainMvpView, never()).showRibots(anyListOf(Ribot::class.java))
+        verify(mockMainMvpView, never()).showRibots(anyList<Ribot>())
         verify(mockMainMvpView, never()).showError()
     }
 
@@ -75,6 +75,6 @@ class MainPresenterTest {
         mainPresenter.loadRibots()
         verify(mockMainMvpView).showError()
         verify(mockMainMvpView, never()).showRibotsEmpty()
-        verify(mockMainMvpView, never()).showRibots(anyListOf(Ribot::class.java))
+        verify(mockMainMvpView, never()).showRibots(anyList<Ribot>())
     }
 }
